@@ -25,4 +25,4 @@ export {
 export * from './lib/client'
 export * from './lib/shared'
 export { ReasonCodes } from './lib/handlers/ack'
-export type { Timer } from './lib/get-timer'
+export type * from './lib/get-timer'

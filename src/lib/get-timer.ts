@@ -1,8 +1,9 @@
 import isBrowser, { isWebWorker, isReactNativeBrowser } from './is-browser'
 import { clearInterval as clearI, setInterval as setI } from 'worker-timers'
 import type { TimerVariant } from './shared'
+import * as BackgroundTimer from 'react-native-background-timer'
 
-// dont directly assign globals to class props otherwise this throws in web workers: Uncaught TypeError: Illegal invocation
+// don't directly assign globals to class props otherwise this throws in web workers: Uncaught TypeError: Illegal invocation
 // See: https://stackoverflow.com/questions/9677985/uncaught-typeerror-illegal-invocation-in-chrome
 
 export interface Timer {
@@ -16,8 +17,11 @@ const workerTimer: Timer = {
 }
 
 const nativeTimer: Timer = {
-	set: (func, time) => setInterval(func, time),
-	clear: (timerId) => clearInterval(timerId),
+	set: (func, time) => {
+		console.log('get timer use BackgroundTimer')
+		return BackgroundTimer.setInterval(func, time)
+	},
+	clear: (timerId) => BackgroundTimer.clearInterval(timerId),
 }
 
 const getTimer = (variant: TimerVariant): Timer => {
